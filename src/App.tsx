@@ -35,16 +35,17 @@ function App() {
         })
         scope.setTransactionName("Error from home")
         scope.setLevel(Sentry.Severity.Log)
-        Sentry.captureMessage( e.getMessage() )
+        Sentry.captureException( e )
       })
     }    
   }
 
   return (
-    <React.Fragment>
-      <button onClick={handleNotExpectedError}>Break the world</button>
-      <button onClick={handleExpectedError}>Trigger expected Error</button>
-    </React.Fragment>
+    <div className="App-header">
+      <button onClick={handleNotExpectedError} className="button1Cls" id="button1">Break the world</button>
+      <br/>
+      <button onClick={handleExpectedError} className="button2Cls" id="button2">Trigger expected Error</button>
+    </div>
   )
 }
 
