@@ -15,16 +15,16 @@ function App() {
         setTimeout(() => {
           if (status === false) return resolve("Everything was all right!")
           reject("There has been an expected error")
-        }, 3000)
+        }, 1000)
       })
   
       await promise.then( response => {
         alert( response )
+        setStatus( !status )
       }).catch(e => {
+        setStatus( !status )
         throw new Error( e )
       })
-  
-      setStatus( !status )
     } catch( e ){
       Sentry.withScope( ( scope ) => {
         scope.clear()
@@ -33,11 +33,11 @@ function App() {
           id: 123,
           name: "Gerardo"
         })
+        scope.setTransactionName("Error from home")
         scope.setLevel(Sentry.Severity.Log)
-        Sentry.captureException( e )
+        Sentry.captureMessage( e.getMessage() )
       })
-    }
-    
+    }    
   }
 
   return (
