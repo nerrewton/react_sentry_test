@@ -1,19 +1,60 @@
-const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const port = process.env.PORT || 8080;
 
 module.exports = {
-  // other configuration
-  configureWebpack: {
+    mode: 'development',
+    entry: './src/index.tsx',
+    output: {
+        filename: 'bundle.[hash].js'
+    },
+    devtool: 'inline-source-map',
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.ts?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(svg|png|jpg|gif)$/,
+                use: 'file-loader',
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
     plugins: [
-      new SentryWebpackPlugin({
-        // sentry-cli configuration
-        authToken: process.env.REACT_APP_SENTRY_TOKEN,
-        org: "spring-51",
-        project: "spring-51",
-
-        // webpack specific configuration
-        include: ".",
-        ignore: ["node_modules", "webpack.config.js"],
-      }),
+        new HtmlWebpackPlugin({
+            template: 'public/index.html',
+            favicon: 'public/favicon.ico'
+        })
     ],
-  },
+    devServer: {
+        host: 'localhost',
+        port: port,
+        historyApiFallback: true,
+        open: true
+    }
 };

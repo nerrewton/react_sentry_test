@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+//import reportWebVitals from './reportWebVitals';
 import * as Sentry from '@sentry/react';
 import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_URL,
-  release: process.env.REACT_APP_SENTRY_VERSION,
-  autoSessionTracking: true,
-  integrations: [new Integrations.BrowserTracing()],
+  dsn: "https://3b6c0d6ce39244f48c5e50b7da900029@o541469.ingest.sentry.io/5660430",
+  release: "my-project@1.0.0",
+  integrations: [
+    new Integrations.BrowserTracing()
+  ],
 
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
@@ -27,4 +28,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+//reportWebVitals();
